@@ -1,34 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import './App.css';
+import notifications from './notifications';
+import NotificationWrapper from './NotificationWrapper';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [notificationList, setNotificationList] = useState(notifications);
+
+  // Clear individual notification by ID
+  const clearNotification = (id) => {
+    setNotificationList(notificationList.filter(notification => notification.id !== id));
+  };
+
+  // Clear all notifications
+  const clearAllNotifications = () => {
+    setNotificationList([]);
+  };
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
+      <div className="header mb-4">
+        <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
-        <a href="https://reactjs.org" target="_blank">
+        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      
+      <h1 className="mb-4">Notification List</h1>
+      <p>Total Notifications: {notificationList.length}</p>
+
+      {/* Using NotificationWrapper with children */}
+      <NotificationWrapper>
+        {notificationList.map(notification => (
+          <div key={notification.id} className="notification animate__animated animate__fadeIn">
+            <h2>{notification.name}</h2>
+            <p>{notification.message}</p>
+            <button
+              className="btn btn-danger mt-3"
+              onClick={() => clearNotification(notification.id)}
+            >
+              Clear Notification
+            </button>
+          </div>
+        ))}
+      </NotificationWrapper>
+
+      <div className="card mt-4">
+        <button className="btn btn-primary" onClick={clearAllNotifications}>
+          Clear All Notifications
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
