@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+import React, { useState } from 'react';
 import './App.css';
 import notifications from './notifications';
 import NotificationWrapper from './NotificationWrapper';
@@ -9,7 +8,7 @@ function App() {
 
   // Clear individual notification by ID
   const clearNotification = (id) => {
-    setNotificationList(notificationList.filter(notification => notification.id !== id));
+    setNotificationList(notificationList.filter((notification) => notification.id !== id));
   };
 
   // Clear all notifications
@@ -19,26 +18,17 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header mb-4">
-        <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      
       <h1 className="mb-4">Notification List</h1>
       <p>Total Notifications: {notificationList.length}</p>
 
-      {/* Using NotificationWrapper with children */}
+      {/* Using NotificationWrapper to render notifications */}
       <NotificationWrapper>
-        {notificationList.map(notification => (
-          <div key={notification.id} className="notification animate__animated animate__fadeIn">
-            <h2>{notification.name}</h2>
-            <p>{notification.message}</p>
+        {notificationList.map((notification) => (
+          <div key={notification.id} className="notification card mb-3 p-3">
+            <h5 className="card-title">{notification.name}</h5>
+            <p className="card-text">{notification.message}</p>
             <button
-              className="btn btn-danger mt-3"
+              className="btn btn-danger mt-2"
               onClick={() => clearNotification(notification.id)}
             >
               Clear Notification
@@ -47,11 +37,9 @@ function App() {
         ))}
       </NotificationWrapper>
 
-      <div className="card mt-4">
-        <button className="btn btn-primary" onClick={clearAllNotifications}>
-          Clear All Notifications
-        </button>
-      </div>
+      <button className="btn btn-primary mt-4" onClick={clearAllNotifications}>
+        Clear All Notifications
+      </button>
     </div>
   );
 }

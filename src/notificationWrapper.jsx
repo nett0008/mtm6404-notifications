@@ -2,11 +2,7 @@
 import React from 'react';
 
 function NotificationWrapper({ children }) {
-  return (
-    <div className="container notifications">
-      {children}
-    </div>
-  );
+  return <div className="notification-wrapper">{children}</div>;
 }
 
 export default NotificationWrapper;
